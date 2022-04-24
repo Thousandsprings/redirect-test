@@ -27,9 +27,33 @@ function loaded() {
   document.getElementById("loading").classList.remove("active");
 
   if (pathName == void 0) {
-    window.location.href = "https://orderie.jp/";
+    // リダイレクト先にパラメーターを引き継ぐ
+    const redirect_url = "https://orderie.jp/" + location.search;
+    // 直前のURLがあるかどうか(urlを直接叩いての流入なのか判別)
+    if (document.referrer) {
+      // リダイレクト先に渡す用のパラメーターを作成
+      const referrer = "referrer=" + encodeURIComponent(document.referrer);
+      // リダイレクト先にリファラー情報をパラメーターとして渡す
+      // (クエリ文字があれば&で繋いでなければ?でクエリ文字として追加)
+      redirect_url = redirect_url + (location.search ? "&" : "?") + referrer;
+      console.log(referrer);
+    }
+    window.location.href = redirect_url;
   } else {
-    window.location.href = `https://orderie.jp${newValue}`;
+    // リダイレクト先にパラメーターを引き継ぐ
+    const redirect_url_category =
+      `https://orderie.jp${newValue}` + location.search;
+    // 直前のURLがあるかどうか(urlを直接叩いての流入なのか判別)
+    if (document.referrer) {
+      // リダイレクト先に渡す用のパラメーターを作成
+      const referrer = "referrer=" + encodeURIComponent(document.referrer);
+      // リダイレクト先にリファラー情報をパラメーターとして渡す
+      // (クエリ文字があれば&で繋いでなければ?でクエリ文字として追加)
+      redirect_url_category =
+        redirect_url + (location.search ? "&" : "?") + referrer;
+      console.log(referrer);
+    }
+    window.location.href = redirect_url_category;
   }
 }
 setTimeout(loaded, 3000);
